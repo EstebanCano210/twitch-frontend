@@ -1,6 +1,6 @@
 const imageUrl = '';
 
-const channelAvatar = ({url}) => {
+const ChannelAvatar = ({url}) => {
     return(
         <div className="channels-avatar-container">
             <img src={url || imageUrl} width="100%" height="100%" alt="Default avatar"/>
