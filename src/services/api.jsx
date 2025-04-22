@@ -55,22 +55,22 @@ export const getChannels = async () => {
     }
 }
 
-export const getChannelsSettings = async () => {
+export const getChannelSettings = async () => {
     try {
         return await apiClient.get('/settings/channel')
     } catch (e) {
-        return{
+        return {
             error: true,
             e
         }
     }
-} 
+}
 
 export const changePassword = async (data) => {
     try {
         return await apiClient.patch('/settings/password', data)
     } catch (e) {
-        return{
+        return {
             error: true,
             e
         }

@@ -5,7 +5,7 @@ import {
     validationAvatarUrl,
     avatarUrlValidationMessage,
     validateDescription,
-    descriptionMessage,
+    descriptionValidateMessage,
     validateTitle,
     validateTitleMessage
 } from '../../shared/validators'
@@ -20,7 +20,7 @@ const inputs = [
     },
     {
         field: 'title',
-        laberl: 'Title',
+        label: 'Title',
         validationMessage: validateTitleMessage,
         type: 'text'
     },
@@ -32,18 +32,18 @@ const inputs = [
     },
     {
         field: 'description',
-        label: 'Description',
-        validationMessage: descriptionMessage,
+        label: 'Descripción',
+        validationMessage: descriptionValidateMessage,
         type: 'text'
     }
 ]
 
-export const ChannelSettings = ({settings, saveSettings}) => {
+export const ChannelSettings = ({ settings, saveSettings }) => {
     const [formState, setFormState] = useState({
         username: {
             isValid: validateUsername(settings.username),
             showError: false,
-            value: settings.title
+            value: settings.username
         },
         title: {
             isValid: validateTitle(settings.title),
@@ -76,7 +76,7 @@ export const ChannelSettings = ({settings, saveSettings}) => {
 
         let isValid = false
 
-        switch (field) {
+        switch(field) {
             case 'username':
                 isValid = validateUsername(value)
                 break;
@@ -105,11 +105,38 @@ export const ChannelSettings = ({settings, saveSettings}) => {
     const handleFormSubmit = (event) => {
         event.preventDefault();
 
-        sevaSettings({
+        saveSettings({
             username: formState.username.value,
             title: formState.title.value,
             avatarUrl: formState.avatarUrl.value,
             description: formState.description.value
         })
-    } 
+    }
+
+    const isSubmitButtonDisabled = !formState.username.isValid ||
+        !formState.title.isValid ||
+        !formState.avatarUrl.isValid ||
+        !formState.description.isValid
+
+    return (
+        <form className="settings-form">
+            {inputs.map((input) => (
+                <Input 
+                    key={input.field}
+                    field={input.field}
+                    label={input.label}
+                    value={formState[input.field].value}
+                    onChangeHandler={handleInputValueChange}
+                    onBlurHandler={handleInputValidationOnBlur}
+                    showErrorMessage={formState[input.field].showError}
+                    validationMessage={input.validationMessage}
+                    type={input.type}
+                    textarea={input.textarea}
+                />
+            ))}
+            <button onClick={handleFormSubmit} disabled={isSubmitButtonDisabled}>
+                Update
+            </button>
+        </form>
+    )
 }

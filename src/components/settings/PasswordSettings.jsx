@@ -22,7 +22,7 @@ const inputs = [
 ]
 
 export const PasswordSettings = () => {
-    const [formState, setFormState] = useState({
+    const [formState, setFormState ] = useState({
         password: {
             isValid: false,
             showError: false,
@@ -48,7 +48,7 @@ export const PasswordSettings = () => {
     }
 
     const handleInputValidationOnBlur = (value, field) => {
-        
+
         let isValid = validatePassword(value)
 
         setFormState((prevState) => ({
@@ -75,9 +75,10 @@ export const PasswordSettings = () => {
                 <Input
                     key={input.field}
                     field={input.field}
-                    label={formState[input.field].value}
+                    label={input.label}
+                    value={formState[input.field].value}
                     onChangeHandler={handleInputValueChange}
-                    unBlurHandler={handleInputValidationOnBlur}
+                    onBlurHandler={handleInputValidationOnBlur}
                     showErrorMessage={formState[input.field].showError}
                     validationMessage={input.validationMessage}
                     type={input.type}
