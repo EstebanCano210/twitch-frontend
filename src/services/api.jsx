@@ -113,7 +113,7 @@ export const getChannelDetails = async (channelId) => {
 
 export const followedChannel = async (channelId) => {
     try {
-        return await apiClient.post('/channels//follow', {channelId})
+        return await apiClient.post('/channels/follow', {channelId})
     } catch (e) {
         return{
             error: true,
